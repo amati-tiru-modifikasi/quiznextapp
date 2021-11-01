@@ -16,6 +16,7 @@ const Navbar: React.FC<{}> = () => {
                         <Box>
                             <Link
                                 p={2}
+                                onClick={() => router.push('/quiz/new')}
                                 fontWeight={
                                     router.pathname === '/quiz/new' ? 'extrabold' : 'normal'
                                 }
