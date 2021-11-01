@@ -118,6 +118,7 @@ const  Index = () => {
                     }
                 })
             }
+            await addQuizApi(auth, values);
         } catch (error) {
             console.log('Error: ',error)
         } finally {
