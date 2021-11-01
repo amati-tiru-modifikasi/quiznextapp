@@ -181,7 +181,138 @@ const  Index = () => {
                         Enter your question data:
                       </FormLabel>
                       <Box ml={4}>
-                        
+                        <FieldArray {...field} name="questions" id="questions">
+                          {(fieldArrayProps) => {
+                            const { push, remove, form } = fieldArrayProps;
+                            const { values, errors, touched } = form;
+                            const { questions } = values;
+                            const errorHandler = (name) => {
+                                const error = getIn(errors, name);
+                                const touch = getIn(touched, name);
+                                return touch && error ? error : null;
+                            };
+                            return (
+                              <div>
+                                {questions.map((_question, index) => {
+                                  return (
+                                    <Flex key={index} direction="column">
+                                      <FormControl
+                                        isInvalid={errorHandler(
+                                          `questions[${index}][title]`
+                                        )}
+                                      >
+                                        <FormLabel
+                                          htmlFor={`questions[${index}][title]`}
+                                        >
+                                          Question Title:
+                                        </FormLabel>
+                                        <Input
+                                          name={`questions[${index}][title]`}
+                                          as={Field}
+                                          mb={
+                                            !errorHandler(
+                                              `questions[${index}][title]`
+                                            ) && 3
+                                          }
+                                        />
+                                        <FormErrorMessage>
+                                          {errorHandler(
+                                            `questions[${index}][title]`
+                                          )}
+                                        </FormErrorMessage>
+                                      </FormControl>
+                                      <SimpleGrid
+                                        minChildWidth="300px"
+                                        spacing="10px"
+                                        mb={{ base: 4 }}
+                                      >
+                                        {optionData.map((option, subIndex) => (
+                                          <FormControl
+                                            mb={2}
+                                            key={subIndex}
+                                            isInvalid={errorHandler(
+                                              `questions[${index}][options][${subIndex}].title`
+                                            )}
+                                          >
+                                            <FormLabel
+                                              htmlFor={`questions[${index}][options][${subIndex}].title`}
+                                            >
+                                              {option.label}
+                                            </FormLabel>
+                                            <Input
+                                              name={`questions[${index}][options][${subIndex}].title`}
+                                              as={Field}
+                                            />
+                                            <FormErrorMessage>
+                                              {errorHandler(
+                                                `questions[${index}][options][${subIndex}].title`
+                                              )}
+                                            </FormErrorMessage>
+                                          </FormControl>
+                                        ))}
+                                      </SimpleGrid>
+                                      <Box>
+                                        <Text mb="8px">Correct Answer:</Text>
+                                        <Field
+                                          component="select"
+                                          name={`questions[${index}][answer]`}
+                                          style={{
+                                            width: '100%',
+                                            padding: '10px',
+                                          }}
+                                        >
+                                          {answerOption.map((value, key) => (
+                                            <option
+                                              value={value.answer}
+                                              key={key}
+                                            >
+                                              {value.label}
+                                            </option>
+                                          ))}
+                                        </Field>
+                                      </Box>
+                                      <Flex
+                                        direction="row"
+                                        justify="flex-end"
+                                        mt={4}
+                                      >
+                                        {index > 0 && (
+                                          <IconButton
+                                            onClick={() => remove(index)}
+                                            aria-label="Remove Question"
+                                            icon={<MinusIcon />}
+                                            variant="ghost"
+                                          >
+                                            -
+                                          </IconButton>
+                                        )}
+                                        {index === questions.length - 1 && (
+                                          <IconButton
+                                            onClick={() => push(questionsData)}
+                                            aria-label="Add Question"
+                                            icon={<AddIcon />}
+                                            variant="ghost"
+                                          >
+                                            +
+                                          </IconButton>
+                                        )}
+                                      </Flex>
+                                      {index !== questions.length - 1 && (
+                                        <Divider
+                                          mt={2}
+                                          mb={4}
+                                          css={{
+                                            boxShadow: '1px 1px #888888',
+                                          }}
+                                        />
+                                      )}
+                                    </Flex>
+                                  );
+                                })}
+                              </div>
+                            );
+                          }}
+                        </FieldArray>
                       </Box>
                     </FormControl>
                   )}
