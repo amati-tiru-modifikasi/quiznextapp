@@ -8,3 +8,8 @@ export const addUser = async (authUser: any) => {
         .set({...authUser}, { merge: true });
     return res;
 }
+
+export const addQuiz = async (quizData) => {
+    let res = await firebase.firestore().collection('quiz').add(quizData);
+    return res;
+}
