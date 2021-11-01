@@ -7,15 +7,25 @@ const Navbar: React.FC<{}> = () => {
 
     return (
         <>
-            <Flex>
-                <Heading>QuizApp</Heading>
+            <Flex justify="space-between" m={4}>
+                <Heading onClick={() => router.push('/')} as="button">QuizApp</Heading>
                 <Box>
-                    <Box>
-                        <Link>Masuk</Link>
+                    <Box p={2}>
+                        <Link
+                            p={2}
+                            onClick={() => router.push('/masuk')}
+                            fontWeight={
+                                router.pathname === '/masuk' ? 'extrabold' : 'normal'
+                            }
+                        >Masuk</Link>
                     </Box>
                 </Box>
             </Flex>
-            <Divider />
+            <Divider 
+                css={{
+                    boxShadow: '1px 1px #888888'
+                }}
+            />
         </>
     )
 }
