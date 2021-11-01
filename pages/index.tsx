@@ -1,3 +1,16 @@
-const IndexPage = () => <h1>Hello Next.js 👋</h1>;
+import Head from 'next/head'
+
+const IndexPage = () => {
+    return (
+        <div>
+            <Head>
+                <title>QuizApp from Freecodecamp by Topidesta</title>
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+            <main></main>
+            <footer></footer>
+        </div>
+    )
+}
 
 export default IndexPage;
